@@ -1,5 +1,6 @@
 package com.marcosribeiro.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,5 +18,10 @@ public class CategoryService {
 	public Category find(Integer id) {
 		Optional<Category> obj = categoryRepository.findById(id);
 		return obj.orElse(null);
-		}
+	}
+	
+	public List<Category> findAll() {
+		List<Category> obj = categoryRepository.findAll();
+		return obj;
+	}
 }
