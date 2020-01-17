@@ -21,8 +21,6 @@ import com.marcosribeiro.repository.ClientRepository;
 import com.marcosribeiro.repository.ProductRepository;
 import com.marcosribeiro.repository.StateRepository;
 
-import lombok.Cleanup;
-
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
 
