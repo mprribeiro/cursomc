@@ -21,7 +21,7 @@ public class CategoryResource {
 	@Autowired
 	private CategoryService categoryService;
 	
-	@RequestMapping(value="", method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public List<Category> retrieveAll() {
 		return categoryService.findAll();
 	}

@@ -1,14 +1,15 @@
 package com.marcosribeiro.domain.enums;
 
-public enum ClientType {
+public enum PaymentStatus {
 
-	PERSON(1, "Pessoa Física"),
-	COMPANY(2, "Pessoa Jurídica");
+	PENDING(1, "Pendente"),
+	APPROVED(2, "Aprovado"),
+	CANCELED(3, "Cancelado");
 	
 	private int code;
 	private String description;
 	
-	private ClientType(int code, String description) {
+	private PaymentStatus(int code, String description) {
 		this.code = code;
 		this.description = description;
 	}
@@ -21,13 +22,13 @@ public enum ClientType {
 		return description;
 	}
 	
-	public static ClientType toEnum(Integer code) {
+	public static PaymentStatus toEnum(Integer code) {
 		
 		if (code == null) {
 			return null;
 		}
 		
-		for (ClientType x : ClientType.values()) {
+		for (PaymentStatus x : PaymentStatus.values()) {
 			if (code.equals(x.getCode())) {
 				return x;
 			}

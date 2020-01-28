@@ -26,7 +26,7 @@ public class Client implements Serializable {
 	private Integer id;
 	private String name;
 	private String email;
-	private String cpfOuCnpj;
+	private String register;
 	private Integer type;
 	
 	@JsonManagedReference
@@ -34,17 +34,20 @@ public class Client implements Serializable {
 	private List<Address> addresses = new ArrayList<>();
 	
 	@ElementCollection
-	@CollectionTable(name = "PHONE")
+	@CollectionTable(name = "phone")
 	private Set<String> phones = new HashSet<>();
+	
+	@OneToMany(mappedBy="client")
+	private List<Order> orders = new ArrayList<>();
 	
 	public Client( ) {}
 
-	public Client(Integer id, String name, String email, String cpfOuCnpj, ClientType type) {
+	public Client(Integer id, String name, String email, String register, ClientType type) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.cpfOuCnpj = cpfOuCnpj;
+		this.register = register;
 		this.type = type.getCode();
 	}
 
@@ -72,12 +75,12 @@ public class Client implements Serializable {
 		this.email = email;
 	}
 
-	public String getCpfOuCnpj() {
-		return cpfOuCnpj;
+	public String getRegister() {
+		return register;
 	}
 
-	public void setCpfOuCnpj(String cpfOuCnpj) {
-		this.cpfOuCnpj = cpfOuCnpj;
+	public void setRegister(String register) {
+		this.register = register;
 	}
 
 	public ClientType getType() {
@@ -102,6 +105,14 @@ public class Client implements Serializable {
 
 	public void setPhones(Set<String> phones) {
 		this.phones = phones;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 	@Override

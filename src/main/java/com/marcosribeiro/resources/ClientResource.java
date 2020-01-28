@@ -21,7 +21,7 @@ public class ClientResource {
 	@Autowired
 	private ClientService clientService;
 	
-	@RequestMapping(value="", method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public List<Client> retrieveAll() {
 		return clientService.findAll();
 	}
