@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.marcosribeiro.domain.Category;
+import com.marcosribeiro.dto.CategoryDTO;
 import com.marcosribeiro.repository.CategoryRepository;
 import com.marcosribeiro.services.exceptions.DataIntegrityException;
 import com.marcosribeiro.services.exceptions.ObjectNotFoundException;
@@ -55,6 +56,10 @@ public class CategoryService {
 	public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return categoryRepository.findAll(pageRequest);
+	}
+	
+	public Category fromDTO(CategoryDTO categoryDTO) {
+		return new Category(categoryDTO.getId(), categoryDTO.getName());
 	}
 
 }
