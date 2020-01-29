@@ -2,6 +2,8 @@ package com.marcosribeiro.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,8 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="order_table")
@@ -21,6 +26,8 @@ public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date instant;
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
@@ -33,6 +40,9 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="delivery_address_id")
 	private Address deliveryAddress;
+	
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderedItem> items = new HashSet<>();
 	
 	public Order() {}
 
@@ -82,6 +92,14 @@ public class Order implements Serializable {
 
 	public void setDeliveryAddress(Address deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
+	}
+	
+	public Set<OrderedItem> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<OrderedItem> items) {
+		this.items = items;
 	}
 
 	@Override
