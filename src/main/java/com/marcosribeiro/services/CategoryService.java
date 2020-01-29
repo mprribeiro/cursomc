@@ -19,11 +19,27 @@ public class CategoryService {
 	public Category find(Integer id) {
 		Optional<Category> obj = categoryRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-		"Objeto não encontrado! Id: " + id + ", Tipo: " + Category.class.getName()));
+				"Objeto não encontrado! Id: " + id));
 		}
 	
 	public List<Category> findAll() {
 		List<Category> obj = categoryRepository.findAll();
 		return obj;
 	}
+	
+	public Category insert(Category category) {
+		category.setId(null);
+		return categoryRepository.save(category);
+	}
+	
+	public Category update(Category category) {
+		find(category.getId());
+		return categoryRepository.save(category);
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		categoryRepository.deleteById(id);
+	}
+
 }
