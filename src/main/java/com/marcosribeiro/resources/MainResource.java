@@ -10,7 +10,7 @@ public class MainResource {
 
 	@RequestMapping(value="")
 	public void Main( ) {
-		System.out.print("Aplicação para aplicar conhecimentos de DevOps, Java 8, Spring e Angular.");
+		System.out.println("Aplicação para aplicar conhecimentos de DevOps, Java 8, Spring e Angular.");
 	}
 			
 }
