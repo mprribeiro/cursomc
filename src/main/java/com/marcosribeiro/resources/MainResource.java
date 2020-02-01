@@ -11,7 +11,7 @@ public class MainResource {
 
 	@RequestMapping(method=RequestMethod.GET)
 	public String Main( ) {
-		return "Aplicação para aplicar conhecimentos de DevOps, Java 8, Spring e Angular.";
+		return "Aplicação para executar os conhecimentos de DevOps, Java 8, Spring e Angular.";
 	}
 			
 }
