@@ -5,9 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("")
 public class MainResource {
 
+	@RequestMapping(value="")
 	public void Main( ) {
 		System.out.print("Aplicação para aplicar conhecimentos de DevOps, Java 8, Spring e Angular.");
 	}
