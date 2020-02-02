@@ -2,20 +2,41 @@ package com.marcosribeiro.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.marcosribeiro.services.validation.ClientInsert;
+
+@ClientInsert
 public class ClientNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Length(min=5,max=120, message="Deve conter entre 5 e 80 caracteres")
 	private String name;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Email(message="Email inválido")
 	private String email;
 	private String register;
 	private Integer type;
 	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String street;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String number;
 	private String complement;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String neighborhood;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String cep;
 	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String phone1;
 	private String phone2;
 	private String phone3;
