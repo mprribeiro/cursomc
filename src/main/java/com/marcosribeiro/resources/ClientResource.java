@@ -1,6 +1,7 @@
 package com.marcosribeiro.resources;
 
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.marcosribeiro.domain.Client;
 import com.marcosribeiro.dto.ClientDTO;
@@ -38,6 +40,15 @@ public class ClientResource {
 	public ResponseEntity<Client> find(@PathVariable Integer id) {
 		Client obj = clientService.find(id);
 		return ResponseEntity.ok(obj);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClientDTO clientDTO) {
+		Client client = clientService.fromDTO(clientDTO);
+		client = clientService.insert(client);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(client.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
