@@ -1,7 +1,9 @@
 package com.marcosribeiro.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 import com.marcosribeiro.domain.Order;
 
@@ -10,14 +12,15 @@ public class OrderDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private Date instant;
+	private String instant;
 	
 	public OrderDTO () {}
 	
 	public OrderDTO(Order order) {
 		id = order.getId();
-		instant = order.getInstant();
-		
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT-3"));
+		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		instant = sdf.format(order.getInstant());
 	}
 
 	public Integer getId() {
@@ -28,11 +31,11 @@ public class OrderDTO implements Serializable {
 		this.id = id;
 	}
 
-	public Date getInstant() {
+	public String getInstant() {
 		return instant;
 	}
 
-	public void setInstant(Date instant) {
+	public void setInstant(String instant) {
 		this.instant = instant;
 	}
 	
