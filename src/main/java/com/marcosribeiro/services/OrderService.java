@@ -18,9 +18,8 @@ public class OrderService {
 	
 	public Order find(Integer id) {
 		Optional<Order> obj = orderRepository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
-		"Objeto não encontrado! Id: " + id + ", Tipo: " + Order.class.getName()));
-		}
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id));
+	}
 	
 	public List<Order> findAll() {
 		List<Order> obj = orderRepository.findAll();

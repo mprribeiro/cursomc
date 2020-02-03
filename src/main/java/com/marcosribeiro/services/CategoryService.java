@@ -24,9 +24,8 @@ public class CategoryService {
 	
 	public Category find(Integer id) {
 		Optional<Category> obj = categoryRepository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id));
-		}
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id));
+	}
 	
 	public List<Category> findAll() {
 		return categoryRepository.findAll();
