@@ -1,7 +1,6 @@
 package com.marcosribeiro.resources;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marcosribeiro.domain.Order;
-import com.marcosribeiro.dto.OrderDTO;
 import com.marcosribeiro.services.OrderService;
 
 @RestController
@@ -22,10 +20,9 @@ public class OrderResource {
 	private OrderService orderService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<OrderDTO>> findAll() {
+	public ResponseEntity<List<Order>> findAll() {
 		List<Order> list = orderService.findAll();
-		List<OrderDTO> listDTO= list.stream().map(obj -> new OrderDTO(obj)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDTO);
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)

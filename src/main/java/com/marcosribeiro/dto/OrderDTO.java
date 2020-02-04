@@ -32,6 +32,7 @@ public class OrderDTO implements Serializable {
 		this.instant = order.getInstant();
 		this.payment = order.getPayment();
 		this.deliveryAddress = order.getDeliveryAddress();
+		items = order.getItems();
 	}
 	
 	public String getClientName() {
