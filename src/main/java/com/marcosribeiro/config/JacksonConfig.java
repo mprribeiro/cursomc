@@ -20,7 +20,7 @@ public class JacksonConfig {
 				objectMapper.registerSubtypes(PaymentWithSlip.class);
 				objectMapper.registerSubtypes(PaymentWithCard.class);
 				super.configure(objectMapper);
-			};
+			}
 		};
 		return builder;
 	}

@@ -10,9 +10,9 @@ import com.marcosribeiro.domain.PaymentWithSlip;
 @Service
 public class SlipService {
 
-	public void fillPaymentWithSlipe(PaymentWithSlip pgto, Date instant) {
+	public void fillPaymentWithSlip(PaymentWithSlip pgto, Date orderInstant) {
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(instant);
+		cal.setTime(orderInstant);
 		cal.add(Calendar.DAY_OF_MONTH, 7);
 		pgto.setDueDate(cal.getTime());
 	}

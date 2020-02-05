@@ -1,5 +1,6 @@
 package com.marcosribeiro.services;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -53,16 +54,16 @@ public class OrderService {
 		order.getPayment().setOrder(order);
 		if (order.getPayment() instanceof PaymentWithSlip) {
 			PaymentWithSlip pgto = (PaymentWithSlip) order.getPayment();
-			slipService.fillPaymentWithSlipe(pgto, order.getInstant());
+			slipService.fillPaymentWithSlip(pgto, order.getInstant());
 		}
-		order = orderRepository.save(order);
-		paymentRepository.save(order.getPayment());
+		orderRepository.saveAll(Arrays.asList(order));
+		paymentRepository.saveAll(Arrays.asList(order.getPayment()));
 		for (OrderedItem oi : order.getItems()) {
 			oi.setDiscount(0.0);
 			oi.setPrice(productService.find(oi.getProduct().getId()).getPrice());
 			oi.setOrder(order);
 		}
 		orderedItemRepository.saveAll(order.getItems());
-		return order;
+		return order;	
 	}
 }
