@@ -1,8 +1,11 @@
 package com.marcosribeiro.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -134,5 +137,29 @@ public class Order implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		StringBuilder builder = new StringBuilder();
+		builder.append("Order number: ");
+		builder.append(id);
+		builder.append(", Instant: ");
+		builder.append(sdf.format(getInstant()));
+		builder.append(", Client: ");
+		builder.append(getClient().getName());
+		builder.append(", Payment status: ");
+		builder.append(getPayment().getStatus().getDescription());
+		builder.append("\nDetails: \n");
+		for (OrderedItem x : getItems()) {
+			builder.append(x.toString());
+		}
+		builder.append("\nTotal: ");
+		builder.append(nf.format(getTotalValue()));
+		return builder.toString();
+	}
+	
+	
 	
 }
