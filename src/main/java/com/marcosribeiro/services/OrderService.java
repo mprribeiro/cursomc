@@ -44,7 +44,7 @@ public class OrderService {
 	
 	public Order find(Integer id) {
 		Optional<Order> obj = orderRepository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Type: " + Order.class.getName()));
 	}
 	
 	public List<Order> findAll() {
@@ -72,7 +72,7 @@ public class OrderService {
 			oi.setOrder(order);
 		}
 		orderedItemRepository.saveAll(order.getItems());
-		emailService.sendOrderConfirmationEmail(order);
+		emailService.sendOrderConfirmationHtmlEmail(order);
 		return order;	
 	}
 }
