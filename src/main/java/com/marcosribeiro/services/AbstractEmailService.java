@@ -16,7 +16,7 @@ import org.thymeleaf.context.Context;
 import com.marcosribeiro.domain.Order;
 
 public abstract class AbstractEmailService implements EmailService {
-
+	
 	@Autowired
 	private TemplateEngine templateEngine;
 	
@@ -69,4 +69,5 @@ public abstract class AbstractEmailService implements EmailService {
 		mmh.setText(htmlFromTemplateOrder(order), true);
 		return mimeMessage;
 	}
+
 }

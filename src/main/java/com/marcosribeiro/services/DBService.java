@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.marcosribeiro.domain.Address;
@@ -20,6 +21,7 @@ import com.marcosribeiro.domain.Product;
 import com.marcosribeiro.domain.State;
 import com.marcosribeiro.domain.enums.ClientType;
 import com.marcosribeiro.domain.enums.PaymentStatus;
+import com.marcosribeiro.domain.enums.Profile;
 import com.marcosribeiro.repository.AddressRepository;
 import com.marcosribeiro.repository.CategoryRepository;
 import com.marcosribeiro.repository.CityRepository;
@@ -59,6 +61,9 @@ public class DBService {
 	
 	@Autowired
 	private OrderedItemRepository orderedItemRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 
 	public void instantiateDatabase() throws ParseException {
 		
@@ -107,27 +112,36 @@ public class DBService {
 		
 		State est1 = new State(null, "Minas Gerais");
 		State est2 = new State(null, "São Paulo");
+		State est3 = new State(null, "Rio de Janeiro");
 		
 		City c1 = new City(null, "Uberlândia", est1);
 		City c2 = new City(null, "São Paulo", est2);
 		City c3 = new City(null, "Campinas", est2);
+		City c4 = new City(null, "Rio de Janeiro", est2);
 		
 		est1.getCities().addAll(Arrays.asList(c1));
 		est2.getCities().addAll(Arrays.asList(c2, c3));
+		est1.getCities().addAll(Arrays.asList(c4));
 		
-		stateRepository.saveAll(Arrays.asList(est1, est2));
-		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
+		stateRepository.saveAll(Arrays.asList(est1, est2, est3));
+		cityRepository.saveAll(Arrays.asList(c1, c2, c3, c4));
 		
-		Client cli1 = new Client(null, "Maria Silva", "mprribeiro1902@gmail.com", "42158078609", ClientType.PERSON);
+		Client cli1 = new Client(null, "Marcos Paulo", "mprribeiro1902@gmail.com", "42158078609", ClientType.PERSON, pe.encode("123"));
 		cli1.getPhones().addAll(Arrays.asList("12981162395", "1239668939"));
+		
+		Client cli2 = new Client(null, "Pâmela Rodrigues", "markos-santista@outlook.com", "12345678900", ClientType.PERSON, pe.encode("123"));
+		cli2.getPhones().addAll(Arrays.asList("11981162300", "1139668900"));
+		cli2.addProfile(Profile.ADMIN);
 		
 		Address ad1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim Flórida", "12234567", cli1, c1);
 		Address ad2 = new Address(null, "Rua Santo Expedito", "803", "", "Res. União", "12239021", cli1, c2);
+		Address ad3 = new Address(null, "Rua Copacabana", "557", "Apto 101", "Leblon", "3456798", cli2, c4);
 		
 		cli1.getAddresses().addAll(Arrays.asList(ad1, ad2));
+		cli2.getAddresses().addAll(Arrays.asList(ad3));
 		
-		clientRepository.saveAll(Arrays.asList(cli1));
-		addressRepository.saveAll(Arrays.asList(ad1, ad2));
+		clientRepository.saveAll(Arrays.asList(cli1, cli2));
+		addressRepository.saveAll(Arrays.asList(ad1, ad2, ad3));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
