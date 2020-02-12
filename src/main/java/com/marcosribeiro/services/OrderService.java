@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.marcosribeiro.domain.Client;
 import com.marcosribeiro.domain.Order;
 import com.marcosribeiro.domain.OrderedItem;
 import com.marcosribeiro.domain.PaymentWithSlip;
@@ -16,6 +20,8 @@ import com.marcosribeiro.domain.enums.PaymentStatus;
 import com.marcosribeiro.repository.OrderRepository;
 import com.marcosribeiro.repository.OrderedItemRepository;
 import com.marcosribeiro.repository.PaymentRepository;
+import com.marcosribeiro.security.UserSS;
+import com.marcosribeiro.services.exceptions.AuthorizationException;
 import com.marcosribeiro.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -41,6 +47,7 @@ public class OrderService {
 	
 	@Autowired
 	private EmailService emailService;
+
 	
 	public Order find(Integer id) {
 		Optional<Order> obj = orderRepository.findById(id);
@@ -74,5 +81,19 @@ public class OrderService {
 		orderedItemRepository.saveAll(order.getItems());
 		emailService.sendOrderConfirmationHtmlEmail(order);
 		return order;	
+	}
+	
+	public Page<Order> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		
+		UserSS user = UserService.authenticated();
+		if(user == null) {
+			throw new AuthorizationException("Access denied!");
+		}
+		
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Client client = clientService.find(user.getId());
+		
+		return orderRepository.findByClient(client, pageRequest);
+		
 	}
 }

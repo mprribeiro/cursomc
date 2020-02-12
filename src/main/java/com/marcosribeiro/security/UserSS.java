@@ -27,8 +27,6 @@ public class UserSS implements UserDetails {
 		this.authorities = profiles.stream().map(x -> new SimpleGrantedAuthority(x.getDescription())).collect(Collectors.toList());
 	}
 
-
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
@@ -66,6 +64,10 @@ public class UserSS implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+	
+	public boolean hasRole(Profile profile) {
+		return getAuthorities().contains(new SimpleGrantedAuthority(profile.getDescription()));
 	}
 
 }

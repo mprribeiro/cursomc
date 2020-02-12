@@ -16,10 +16,13 @@ import com.marcosribeiro.domain.Address;
 import com.marcosribeiro.domain.City;
 import com.marcosribeiro.domain.Client;
 import com.marcosribeiro.domain.enums.ClientType;
+import com.marcosribeiro.domain.enums.Profile;
 import com.marcosribeiro.dto.ClientDTO;
 import com.marcosribeiro.dto.ClientNewDTO;
 import com.marcosribeiro.repository.AddressRepository;
 import com.marcosribeiro.repository.ClientRepository;
+import com.marcosribeiro.security.UserSS;
+import com.marcosribeiro.services.exceptions.AuthorizationException;
 import com.marcosribeiro.services.exceptions.DataIntegrityException;
 import com.marcosribeiro.services.exceptions.ObjectNotFoundException;
 
@@ -36,6 +39,12 @@ public class ClientService {
 	private BCryptPasswordEncoder pe;
 	
 	public Client find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Access denied!");
+		}
+		
 		Optional<Client> obj = clientRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id));
 	}

@@ -15,6 +15,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.marcosribeiro.services.exceptions.AuthorizationException;
 import com.marcosribeiro.services.exceptions.DataIntegrityException;
 import com.marcosribeiro.services.exceptions.ObjectNotFoundException;
 
@@ -57,5 +58,17 @@ public class ResourceExceptionHandler {
 		}
 			
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err); 
+	}
+	
+	@ExceptionHandler(AuthorizationException.class)
+	public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request)
+			throws ParseException {
+
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT-3"));
+		Date date = new Date(System.currentTimeMillis());
+		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		StandardError err = new StandardError(HttpStatus.FORBIDDEN.value(), e.getMessage(), sdf.format(date));
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
 	}
 }
