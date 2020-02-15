@@ -54,6 +54,18 @@ public class ClientService {
 		return obj;
 	}
 	
+	public Client findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Profile.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Access denied!");
+		}
+		Client client = clientRepository.findByEmail(email);
+		if (client == null) {
+			throw new ObjectNotFoundException("Object not found! Id: " + user.getId() + ", Type: " + Client.class.getName());
+		}
+		return client;
+	}
+	
 	public void delete(Integer id) {
 		find(id);
 		try {

@@ -117,7 +117,7 @@ public class DBService {
 		City c1 = new City(null, "Uberlândia", est1);
 		City c2 = new City(null, "São Paulo", est2);
 		City c3 = new City(null, "Campinas", est2);
-		City c4 = new City(null, "Rio de Janeiro", est2);
+		City c4 = new City(null, "Rio de Janeiro", est3);
 		
 		est1.getCities().addAll(Arrays.asList(c1));
 		est2.getCities().addAll(Arrays.asList(c2, c3));

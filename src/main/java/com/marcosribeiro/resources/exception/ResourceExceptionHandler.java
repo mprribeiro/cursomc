@@ -30,7 +30,7 @@ public class ResourceExceptionHandler {
 		Date date = new Date(System.currentTimeMillis());
 		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-		StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), sdf.format(date));
+		StandardError err = new StandardError(sdf.format(date), HttpStatus.NOT_FOUND.value(), "Not found", e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
 
@@ -41,7 +41,7 @@ public class ResourceExceptionHandler {
 		Date date = new Date();
 		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 	    
-		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), sdf.format(date)); 
+		StandardError err = new StandardError(sdf.format(date), HttpStatus.BAD_REQUEST.value(), "Data Integrity!", e.getMessage(), request.getRequestURI()); 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err); 
 	}
 	 
@@ -52,7 +52,7 @@ public class ResourceExceptionHandler {
 		Date date = new Date(System.currentTimeMillis());
 		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
-		ValidationError err = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Validation Error", sdf.format(date)); 
+		ValidationError err = new ValidationError(sdf.format(date), HttpStatus.BAD_REQUEST.value(), "Argument not valid!", e.getMessage(), request.getRequestURI()); 
 		for(FieldError x : e.getBindingResult().getFieldErrors()) { 
 			err.addError(x.getField(), x.getDefaultMessage()); 
 		}
@@ -68,7 +68,7 @@ public class ResourceExceptionHandler {
 		Date date = new Date(System.currentTimeMillis());
 		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-		StandardError err = new StandardError(HttpStatus.FORBIDDEN.value(), e.getMessage(), sdf.format(date));
+		StandardError err = new StandardError(sdf.format(date), HttpStatus.FORBIDDEN.value(), "Not authorized!", e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
 	}
 }
