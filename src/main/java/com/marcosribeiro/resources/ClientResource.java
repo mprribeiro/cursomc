@@ -44,8 +44,8 @@ public class ClientResource {
 		return ResponseEntity.ok(obj);
 	}
 	
-	@RequestMapping(value="/{email}", method=RequestMethod.GET)
-	public ResponseEntity<Client> findByEmail(@PathVariable(value="value") String email) {
+	@RequestMapping(value="/email", method=RequestMethod.GET)
+	public ResponseEntity<Client> findByEmail(@RequestParam(value="value") String email) {
 		Client client = clientService.findByEmail(email);
 		return ResponseEntity.ok().body(client);
 	}
