@@ -24,7 +24,6 @@ import com.marcosribeiro.domain.enums.PaymentStatus;
 import com.marcosribeiro.domain.enums.Profile;
 import com.marcosribeiro.repository.AddressRepository;
 import com.marcosribeiro.repository.CategoryRepository;
-import com.marcosribeiro.repository.CityRepository;
 import com.marcosribeiro.repository.ClientRepository;
 import com.marcosribeiro.repository.OrderRepository;
 import com.marcosribeiro.repository.OrderedItemRepository;
@@ -40,9 +39,6 @@ public class DBService {
 	
 	@Autowired
 	private ProductRepository productRepository;
-	
-	@Autowired
-	private CityRepository cityRepository;
 	
 	@Autowired
 	private StateRepository stateRepository;
@@ -124,7 +120,6 @@ public class DBService {
 		est1.getCities().addAll(Arrays.asList(c4));
 		
 		stateRepository.saveAll(Arrays.asList(est1, est2, est3));
-		cityRepository.saveAll(Arrays.asList(c1, c2, c3, c4));
 		
 		Client cli1 = new Client(null, "Marcos Paulo", "mprribeiro1902@gmail.com", "42158078609", ClientType.PERSON, pe.encode("123"));
 		cli1.getPhones().addAll(Arrays.asList("12981162395", "1239668939"));
