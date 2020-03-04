@@ -1,0 +1,11 @@
+dist: trusty
+language: java
+script:
+ - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+jdk:
+ - oraclejdk8
+deploy:
+  provider: heroku
+  api_key:
+    secure: 61daf301-4828-42be-81e4-e8dd3d6daed2
+  app: springcourse

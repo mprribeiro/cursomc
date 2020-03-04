@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.marcosribeiro.domain.Client;
 import com.marcosribeiro.dto.ClientDTO;
+import com.marcosribeiro.dto.ClientNewDTO;
 import com.marcosribeiro.services.ClientService;
 
 @RestController
@@ -51,8 +52,8 @@ public class ClientResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClientDTO clientDTO) {
-		Client client = clientService.fromDTO(clientDTO);
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO clientNewDTO) {
+		Client client = clientService.fromDTO(clientNewDTO);
 		client = clientService.insert(client);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(client.getId()).toUri();
