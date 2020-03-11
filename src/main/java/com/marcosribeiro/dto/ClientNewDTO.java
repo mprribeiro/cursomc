@@ -46,6 +46,8 @@ public class ClientNewDTO implements Serializable {
 	
 	private Integer cityID;
 	
+	private Integer stateID;
+	
 	public ClientNewDTO( ) {}
 
 	public String getName() {
@@ -158,6 +160,14 @@ public class ClientNewDTO implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Integer getStateID() {
+		return stateID;
+	}
+
+	public void setStateID(Integer stateID) {
+		this.stateID = stateID;
 	}
 
 }
