@@ -36,7 +36,7 @@ CREATE TABLE `address` (
   KEY `FK7156ty2o5atyuy9f6kuup9dna` (`client_id`),
   CONSTRAINT `FK7156ty2o5atyuy9f6kuup9dna` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`),
   CONSTRAINT `FKpo044ng5x4gynb291cv24vtea` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (1,'12234567','Apto 203','Jardim Flórida','300','Rua Flores',1,1),(2,'12239021','','Res. União','803','Rua Santo Expedito',2,1);
+INSERT INTO `address` VALUES (1,'12234567','Apto 203','Jardim Flórida','300','Rua Flores',1,1),(2,'12239021','','Res. União','803','Rua Santo Expedito',2,1),(3,'3456798','Apto 101','Leblon','557','Rua Copacabana',4,2);
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +87,7 @@ CREATE TABLE `city` (
   PRIMARY KEY (`id`),
   KEY `FK6p2u50v8fg2y0js6djc6xanit` (`state_id`),
   CONSTRAINT `FK6p2u50v8fg2y0js6djc6xanit` FOREIGN KEY (`state_id`) REFERENCES `state` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ CREATE TABLE `city` (
 
 LOCK TABLES `city` WRITE;
 /*!40000 ALTER TABLE `city` DISABLE KEYS */;
-INSERT INTO `city` VALUES (1,'Uberlândia',1),(2,'São Paulo',2),(3,'Campinas',2);
+INSERT INTO `city` VALUES (1,'Uberlândia',1),(2,'São Paulo',2),(3,'Campinas',2),(4,'Rio de Janeiro',3);
 /*!40000 ALTER TABLE `city` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,11 +111,13 @@ CREATE TABLE `client` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `register` varchar(255) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_bfgjs3fem0hmjhvih80158x29` (`email`),
   UNIQUE KEY `UK_dn5jasds5r1j3ewo5k3nhwkkq` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +126,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'maria@gmail.com','Maria Silva','42158078609',1);
+INSERT INTO `client` VALUES (1,'mprribeiro1902@gmail.com','Marcos Paulo','$2a$10$0glN6ErPeVGPePSIzCVEX.fYbVDtVJYYYsqmqJE0/QjHt0qCLCf0u','42158078609',1),(2,'markos-santista@outlook.com','Pâmela Rodrigues','$2a$10$hJsrxBqmVZO9djVwAV/p8uxnzw/hhrX98nTePMGu5ae4Tt4FFOage','12345678900',1);
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,7 +147,7 @@ CREATE TABLE `order_table` (
   KEY `FK45c9so22xswmyu0jp5l4jpmcn` (`delivery_address_id`),
   CONSTRAINT `FK45c9so22xswmyu0jp5l4jpmcn` FOREIGN KEY (`delivery_address_id`) REFERENCES `address` (`id`),
   CONSTRAINT `FK45qdixgtn84q8aulwt0xgj81m` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +156,7 @@ CREATE TABLE `order_table` (
 
 LOCK TABLES `order_table` WRITE;
 /*!40000 ALTER TABLE `order_table` DISABLE KEYS */;
-INSERT INTO `order_table` VALUES (1,'2017-09-30 13:32:00',1,1),(2,'2017-10-10 22:35:00',1,2);
+INSERT INTO `order_table` VALUES (1,'2017-09-30 13:32:00',1,1),(2,'2017-10-10 22:35:00',1,2),(4,'2020-03-10 00:57:55',1,2);
 /*!40000 ALTER TABLE `order_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +186,7 @@ CREATE TABLE `ordered_item` (
 
 LOCK TABLES `ordered_item` WRITE;
 /*!40000 ALTER TABLE `ordered_item` DISABLE KEYS */;
-INSERT INTO `ordered_item` VALUES (0,2000,1,1,1),(0,80,2,1,3),(100,800,1,2,2);
+INSERT INTO `ordered_item` VALUES (0,2000,1,1,1),(0,80,2,1,3),(100,800,1,2,2),(0,200,1,4,6),(0,180,2,4,10);
 /*!40000 ALTER TABLE `ordered_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +211,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES (1,2),(2,1);
+INSERT INTO `payment` VALUES (1,2),(2,1),(4,1);
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,7 +236,7 @@ CREATE TABLE `payment_with_card` (
 
 LOCK TABLES `payment_with_card` WRITE;
 /*!40000 ALTER TABLE `payment_with_card` DISABLE KEYS */;
-INSERT INTO `payment_with_card` VALUES (6,1);
+INSERT INTO `payment_with_card` VALUES (6,1),(8,4);
 /*!40000 ALTER TABLE `payment_with_card` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +262,7 @@ CREATE TABLE `payment_with_slip` (
 
 LOCK TABLES `payment_with_slip` WRITE;
 /*!40000 ALTER TABLE `payment_with_slip` DISABLE KEYS */;
-INSERT INTO `payment_with_slip` VALUES ('2017-10-20 02:00:00',NULL,2);
+INSERT INTO `payment_with_slip` VALUES ('2017-10-20 03:00:00',NULL,2);
 /*!40000 ALTER TABLE `payment_with_slip` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -285,7 +287,7 @@ CREATE TABLE `phone` (
 
 LOCK TABLES `phone` WRITE;
 /*!40000 ALTER TABLE `phone` DISABLE KEYS */;
-INSERT INTO `phone` VALUES (1,'1239668939'),(1,'12981162395');
+INSERT INTO `phone` VALUES (1,'1239668939'),(1,'12981162395'),(2,'1139668900'),(2,'11981162300');
 /*!40000 ALTER TABLE `phone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -342,6 +344,31 @@ INSERT INTO `product_category` VALUES (1,1),(1,4),(2,1),(2,2),(2,4),(3,1),(3,4),
 UNLOCK TABLES;
 
 --
+-- Table structure for table `profiles`
+--
+
+DROP TABLE IF EXISTS `profiles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `profiles` (
+  `client_id` int(11) NOT NULL,
+  `profiles` int(11) DEFAULT NULL,
+  KEY `FKt2y1e2fvhgusaxk49o6ti0osa` (`client_id`),
+  CONSTRAINT `FKt2y1e2fvhgusaxk49o6ti0osa` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profiles`
+--
+
+LOCK TABLES `profiles` WRITE;
+/*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
+INSERT INTO `profiles` VALUES (1,2),(2,1),(2,2);
+/*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `state`
 --
 
@@ -352,7 +379,7 @@ CREATE TABLE `state` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -361,7 +388,7 @@ CREATE TABLE `state` (
 
 LOCK TABLES `state` WRITE;
 /*!40000 ALTER TABLE `state` DISABLE KEYS */;
-INSERT INTO `state` VALUES (1,'Minas Gerais'),(2,'São Paulo');
+INSERT INTO `state` VALUES (1,'Minas Gerais'),(2,'São Paulo'),(3,'Rio de Janeiro');
 /*!40000 ALTER TABLE `state` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -374,4 +401,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-04 21:22:46
+-- Dump completed on 2020-03-11 21:04:57
