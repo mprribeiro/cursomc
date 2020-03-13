@@ -17,7 +17,7 @@ public class UploadResource {
 	private static String UPLOADED_FOLDER = "/home/marcos/workspace/ionic_angular/cursomc-frontend/src/assets/clients_images";
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	public String uploadFile(@RequestBody String value, @PathVariable String id) throws IOException {
+	public void uploadFile(@RequestBody String value, @PathVariable String id) throws IOException {
 		System.out.println(value);
 		byte[] imageByte = Base64.getDecoder().decode(value);
 		String path = UPLOADED_FOLDER + "/client_" + id + ".png";
@@ -25,8 +25,6 @@ public class UploadResource {
 		outputStream.write(imageByte);
 		outputStream.flush();
 		outputStream.close();
-		System.out.println("Passou!");
-		return "Success";
 	}
 
 }
