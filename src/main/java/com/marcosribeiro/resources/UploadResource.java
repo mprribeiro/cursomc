@@ -21,7 +21,7 @@ public class UploadResource {
 	@RequestMapping(value="/{id}", method = RequestMethod.POST)
 	public String uploadFile(@RequestParam("value") String value, @PathVariable String id) throws IOException {
 			byte[] imageByte = Base64.getDecoder().decode(value);
-			String path = UPLOADED_FOLDER + "/client_" + id + ".jpeg";
+			String path = UPLOADED_FOLDER + "/client_" + id + ".png";
 			FileOutputStream outputStream = new FileOutputStream(path);
 			outputStream.write(imageByte);
 			outputStream.flush();
