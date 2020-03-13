@@ -88,12 +88,12 @@ public class ClientService {
 	}
 	
 	public Client fromDTO(ClientDTO clientDTO) {
-		return new Client(clientDTO.getId(), clientDTO.getName(), clientDTO.getEmail(), null, null, null);
+		return new Client(clientDTO.getId(), clientDTO.getName(), clientDTO.getEmail(), null, null, null, null);
 	}
 	
 	public Client fromDTO(ClientNewDTO clientNewDTO) {
 		Client client = new Client(null, clientNewDTO.getName(), clientNewDTO.getEmail(), 
-				clientNewDTO.getRegister(), ClientType.toEnum(clientNewDTO.getType()), pe.encode(clientNewDTO.getPassword()));
+				clientNewDTO.getRegister(), ClientType.toEnum(clientNewDTO.getType()), pe.encode(clientNewDTO.getPassword()), clientNewDTO.getClientImg());
 		City city = new City(clientNewDTO.getCityID(), null, null);
 		Address address =new Address(null, clientNewDTO.getStreet(), clientNewDTO.getNumber(), clientNewDTO.getComplement(),
 				clientNewDTO.getNeighborhood(), clientNewDTO.getCep(), client, city);
@@ -111,6 +111,12 @@ public class ClientService {
 	public void updateData(Client newClient, Client client) {
 		newClient.setName(client.getName());
 		newClient.setEmail(client.getEmail());
+	}
+	
+	public Client updateImage(String image, Integer id) {
+		Client client = this.find(id);
+		client.setClientImg(image);
+		return clientRepository.save(client);
 	}
 	
 	@Transactional

@@ -56,11 +56,13 @@ public class Client implements Serializable {
 	@OneToMany(mappedBy="client")
 	private List<Order> orders = new ArrayList<>();
 	
+	private String clientImg;
+	
 	public Client( ) {
 		addProfile(Profile.CLIENT);
 	}
 
-	public Client(Integer id, String name, String email, String register, ClientType type, String password) {
+	public Client(Integer id, String name, String email, String register, ClientType type, String password, String clientImg) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -68,6 +70,7 @@ public class Client implements Serializable {
 		this.register = register;
 		this.type = (type == null) ? null : type.getCode();
 		this.password = password;
+		this.clientImg = clientImg;
 		addProfile(Profile.CLIENT);
 	}
 
@@ -174,6 +177,14 @@ public class Client implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getClientImg() {
+		return clientImg;
+	}
+
+	public void setClientImg(String clientImg) {
+		this.clientImg = clientImg;
 	}
 	
 }
