@@ -46,7 +46,7 @@ public class ClientService {
 		}
 		
 		Optional<Client> obj = clientRepository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! Id: " + id));
 	}
 	
 	public List<Client> findAll() {
@@ -88,7 +88,7 @@ public class ClientService {
 	}
 	
 	public Client fromDTO(ClientDTO clientDTO) {
-		return new Client(clientDTO.getId(), clientDTO.getName(), clientDTO.getEmail(), null, null, null, null);
+		return new Client(clientDTO.getId(), clientDTO.getName(), clientDTO.getEmail(), null, null, null, clientDTO.getClientImg());
 	}
 	
 	public Client fromDTO(ClientNewDTO clientNewDTO) {
@@ -111,6 +111,7 @@ public class ClientService {
 	public void updateData(Client newClient, Client client) {
 		newClient.setName(client.getName());
 		newClient.setEmail(client.getEmail());
+		newClient.setClientImg(client.getClientImg());
 	}
 	
 	public Client updateImage(String image, Integer id) {

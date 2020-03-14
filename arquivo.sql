@@ -109,6 +109,7 @@ DROP TABLE IF EXISTS `client`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `client` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `client_img` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
@@ -126,7 +127,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'mprribeiro1902@gmail.com','Marcos Paulo','$2a$10$ROBS1DImMd03M22BNMqj7evGp7/RpC1Hs3gIJBuomB841XT5hziyS','42158078609',1),(2,'markos-santista@outlook.com','Pâmela Rodrigues','$2a$10$q7p4POdOvAkbpOohUtg15uykJScF7tWWPEBy6xYUkKExPFeztZo4a','12345678900',1);
+INSERT INTO `client` VALUES (1,'','mprribeiro1902@gmail.com','Marcos Paulo','$2a$10$uoy5HKhrSqZxI/G2ukzXsu3ENL6KXKthK.udCTQUj3KzZiQGmG5.K','42158078609',1),(2,'','markos-santista@outlook.com','Pâmela Rodrigues','$2a$10$2tcYdqfWKMTDKsGmSG94a.0Y3vOgnxvEXEfef5txj9VB6Sdqj9fKK','12345678900',1);
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -401,4 +402,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-13 16:32:39
+-- Dump completed on 2020-03-14 17:50:30
