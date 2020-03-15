@@ -60,12 +60,6 @@ public class ClientResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@RequestMapping(value="/image/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> updateImage(@RequestBody String image, @PathVariable Integer id) {
-		clientService.updateImage(image, id);
-		return ResponseEntity.noContent().build();
-	}
-	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ClientDTO clientDTO, @PathVariable Integer id) {
 		Client client = clientService.fromDTO(clientDTO);

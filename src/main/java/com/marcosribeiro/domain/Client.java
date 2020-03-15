@@ -56,13 +56,13 @@ public class Client implements Serializable {
 	@OneToMany(mappedBy="client")
 	private List<Order> orders = new ArrayList<>();
 	
-	private String clientImg;
+	private byte[] clientImg;
 	
 	public Client( ) {
 		addProfile(Profile.CLIENT);
 	}
 
-	public Client(Integer id, String name, String email, String register, ClientType type, String password, String clientImg) {
+	public Client(Integer id, String name, String email, String register, ClientType type, String password, byte[] clientImg) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -179,11 +179,11 @@ public class Client implements Serializable {
 		return true;
 	}
 
-	public String getClientImg() {
+	public byte[] getClientImg() {
 		return clientImg;
 	}
 
-	public void setClientImg(String clientImg) {
+	public void setClientImg(byte[] clientImg) {
 		this.clientImg = clientImg;
 	}
 	

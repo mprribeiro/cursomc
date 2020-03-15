@@ -1,5 +1,6 @@
 package com.marcosribeiro.services;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +45,6 @@ public class ClientService {
 		if (user == null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
 			throw new AuthorizationException("Access denied!");
 		}
-		
 		Optional<Client> obj = clientRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! Id: " + id));
 	}
@@ -88,12 +88,14 @@ public class ClientService {
 	}
 	
 	public Client fromDTO(ClientDTO clientDTO) {
-		return new Client(clientDTO.getId(), clientDTO.getName(), clientDTO.getEmail(), null, null, null, clientDTO.getClientImg());
+		byte[] image = Base64.getDecoder().decode(clientDTO.getClientImg());
+		return new Client(clientDTO.getId(), clientDTO.getName(), clientDTO.getEmail(), null, null, null, image);
 	}
 	
 	public Client fromDTO(ClientNewDTO clientNewDTO) {
+		byte[] image = Base64.getDecoder().decode(clientNewDTO.getClientImg());
 		Client client = new Client(null, clientNewDTO.getName(), clientNewDTO.getEmail(), 
-				clientNewDTO.getRegister(), ClientType.toEnum(clientNewDTO.getType()), pe.encode(clientNewDTO.getPassword()), clientNewDTO.getClientImg());
+				clientNewDTO.getRegister(), ClientType.toEnum(clientNewDTO.getType()), pe.encode(clientNewDTO.getPassword()), image);
 		City city = new City(clientNewDTO.getCityID(), null, null);
 		Address address =new Address(null, clientNewDTO.getStreet(), clientNewDTO.getNumber(), clientNewDTO.getComplement(),
 				clientNewDTO.getNeighborhood(), clientNewDTO.getCep(), client, city);
@@ -112,12 +114,6 @@ public class ClientService {
 		newClient.setName(client.getName());
 		newClient.setEmail(client.getEmail());
 		newClient.setClientImg(client.getClientImg());
-	}
-	
-	public Client updateImage(String image, Integer id) {
-		Client client = this.find(id);
-		client.setClientImg(image);
-		return clientRepository.save(client);
 	}
 	
 	@Transactional

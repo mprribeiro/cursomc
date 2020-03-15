@@ -1,6 +1,7 @@
 package com.marcosribeiro.dto;
 
 import java.io.Serializable;
+import java.util.Base64;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -32,7 +33,7 @@ public class ClientDTO implements Serializable {
 		id = client.getId();
 		name = client.getName();
 		email = client.getEmail();
-		clientImg = client.getClientImg();
+		clientImg = Base64.getEncoder().encodeToString(client.getClientImg());
 	}
 
 	public Integer getId() {
