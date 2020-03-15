@@ -88,12 +88,12 @@ public class ClientService {
 	}
 	
 	public Client fromDTO(ClientDTO clientDTO) {
-		byte[] image = Base64.getDecoder().decode(clientDTO.getClientImg());
+		byte[] image = Base64.getMimeDecoder().decode(clientDTO.getClientImg());
 		return new Client(clientDTO.getId(), clientDTO.getName(), clientDTO.getEmail(), null, null, null, image);
 	}
 	
 	public Client fromDTO(ClientNewDTO clientNewDTO) {
-		byte[] image = Base64.getDecoder().decode(clientNewDTO.getClientImg());
+		byte[] image = Base64.getMimeDecoder().decode(clientNewDTO.getClientImg());
 		Client client = new Client(null, clientNewDTO.getName(), clientNewDTO.getEmail(), 
 				clientNewDTO.getRegister(), ClientType.toEnum(clientNewDTO.getType()), pe.encode(clientNewDTO.getPassword()), image);
 		City city = new City(clientNewDTO.getCityID(), null, null);
