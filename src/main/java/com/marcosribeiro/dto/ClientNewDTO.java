@@ -48,7 +48,7 @@ public class ClientNewDTO implements Serializable {
 	
 	private Integer stateID;
 	
-	private String clientImg;
+	private byte[] clientImg;
 	
 	public ClientNewDTO( ) {}
 
@@ -172,11 +172,11 @@ public class ClientNewDTO implements Serializable {
 		this.stateID = stateID;
 	}
 	
-	public String getClientImg() {
+	public byte[] getClientImg() {
 		return clientImg;
 	}
 
-	public void setClientImg(String clientImg) {
+	public void setClientImg(byte[] clientImg) {
 		this.clientImg = clientImg;
 	}
 }

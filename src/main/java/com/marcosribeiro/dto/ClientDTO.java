@@ -1,7 +1,6 @@
 package com.marcosribeiro.dto;
 
 import java.io.Serializable;
-import java.util.Base64;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -25,7 +24,7 @@ public class ClientDTO implements Serializable {
 	@Email(message="Email inválido")
 	private String email;
 	
-	private String clientImg;
+	private byte[] clientImg;
 
 	public ClientDTO () {}
 	
@@ -33,7 +32,7 @@ public class ClientDTO implements Serializable {
 		id = client.getId();
 		name = client.getName();
 		email = client.getEmail();
-		clientImg = Base64.getEncoder().encodeToString(client.getClientImg());
+		clientImg = client.getClientImg();
 	}
 
 	public Integer getId() {
@@ -60,11 +59,11 @@ public class ClientDTO implements Serializable {
 		this.email = email;
 	}
 
-	public String getClientImg() {
+	public byte[] getClientImg() {
 		return clientImg;
 	}
 
-	public void setClientImg(String clientImg) {
+	public void setClientImg(byte[] clientImg) {
 		this.clientImg = clientImg;
 	}
 	

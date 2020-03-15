@@ -1,6 +1,7 @@
 package com.marcosribeiro.resources;
 
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.marcosribeiro.domain.Client;
@@ -65,6 +67,12 @@ public class ClientResource {
 		Client client = clientService.fromDTO(clientDTO);
 		client.setId(id);
 		client = clientService.update(client);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/image/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> updateImage(@RequestBody MultipartFile file, @PathVariable Integer id) throws IOException {
+		clientService.updateImg(file, id);
 		return ResponseEntity.noContent().build();
 	}
 	

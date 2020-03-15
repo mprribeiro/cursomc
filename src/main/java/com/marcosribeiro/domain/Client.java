@@ -16,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -56,6 +57,8 @@ public class Client implements Serializable {
 	@OneToMany(mappedBy="client")
 	private List<Order> orders = new ArrayList<>();
 	
+	@Lob
+	@Column(name = "image")
 	private byte[] clientImg;
 	
 	public Client( ) {

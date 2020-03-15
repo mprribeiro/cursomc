@@ -1,6 +1,6 @@
 package com.marcosribeiro.services;
 
-import java.util.Base64;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.marcosribeiro.domain.Address;
 import com.marcosribeiro.domain.City;
@@ -87,15 +88,19 @@ public class ClientService {
 		return clientRepository.save(newClient);
 	}
 	
+	public Client updateImg(MultipartFile file, Integer id) throws IOException {
+		Client client = find(id);
+		client.setClientImg(file.getBytes());
+		return clientRepository.save(client);
+	}
+	
 	public Client fromDTO(ClientDTO clientDTO) {
-		byte[] image = Base64.getMimeDecoder().decode(clientDTO.getClientImg());
-		return new Client(clientDTO.getId(), clientDTO.getName(), clientDTO.getEmail(), null, null, null, image);
+		return new Client(clientDTO.getId(), clientDTO.getName(), clientDTO.getEmail(), null, null, null, clientDTO.getClientImg());
 	}
 	
 	public Client fromDTO(ClientNewDTO clientNewDTO) {
-		byte[] image = Base64.getMimeDecoder().decode(clientNewDTO.getClientImg());
 		Client client = new Client(null, clientNewDTO.getName(), clientNewDTO.getEmail(), 
-				clientNewDTO.getRegister(), ClientType.toEnum(clientNewDTO.getType()), pe.encode(clientNewDTO.getPassword()), image);
+				clientNewDTO.getRegister(), ClientType.toEnum(clientNewDTO.getType()), pe.encode(clientNewDTO.getPassword()), clientNewDTO.getClientImg());
 		City city = new City(clientNewDTO.getCityID(), null, null);
 		Address address =new Address(null, clientNewDTO.getStreet(), clientNewDTO.getNumber(), clientNewDTO.getComplement(),
 				clientNewDTO.getNeighborhood(), clientNewDTO.getCep(), client, city);
