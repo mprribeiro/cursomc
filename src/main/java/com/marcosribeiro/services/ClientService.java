@@ -90,7 +90,12 @@ public class ClientService {
 	
 	public Client updateImg(MultipartFile file, Integer id) throws IOException {
 		Client client = find(id);
-		client.setClientImg(file.getBytes());
+		byte[] byteObjects = new byte[file.getBytes().length];
+		int i = 0;
+	    for (byte b : file.getBytes()){
+	        byteObjects[i++] = b;
+	    }
+		client.setClientImg(byteObjects);
 		return clientRepository.save(client);
 	}
 	

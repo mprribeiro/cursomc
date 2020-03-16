@@ -58,7 +58,7 @@ public class Client implements Serializable {
 	private List<Order> orders = new ArrayList<>();
 	
 	@Lob
-	@Column(name = "image")
+	@Column(name = "image", columnDefinition="mediumblob")
 	private byte[] clientImg;
 	
 	public Client( ) {
